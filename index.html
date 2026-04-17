@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Gate Pass Request</title>
+<link rel="stylesheet" href="https://cdn-uicons.flaticon.com/uicons-bold-rounded/css/uicons-bold-rounded.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css"/>
+<!-- QRCode.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     MODAL CARD
+═══════════════════════════════════════ -->
+<div class="modal">
+
+  <!-- Header -->
+  <div class="modal-header">
+    <h2>Gate Pass Request</h2>
+    <button class="close-btn"><i class="fi fi-br-cross"></i></button>
+  </div>
+
+  <!-- QR Section -->
+  <div class="qr-section">
+    <div class="qr-box">
+      <div id="qr-container"></div>
+    </div>
+    <p class="qr-hint">Show this QR code at the gate to<br>mark Out and In-time.</p>
+  </div>
+
+  <!-- Info Section — click to edit -->
+  <div class="info-section editable" onclick="openEditor('info')" title="Tap to edit">
+
+    <div class="name-row">
+      <div class="student-name" id="disp-name">MOHAMED ASIF A</div>
+      <div class="status-badge">Approved</div>
+    </div>
+
+    <div class="requested-on" id="disp-requested">
+      Requested on : 28th Mar,2026-10:48 AM.
+    </div>
+
+    <!-- Departure -->
+    <div class="detail-row">
+      <div class="detail-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.8">
+          <circle cx="5" cy="18" r="2"/><circle cx="5" cy="8" r="2"/>
+          <path d="M5 10v6M12 4l-3 4h6l-3-4zM12 8v12"/>
+        </svg>
+      </div>
+      <div class="detail-content">
+        <div class="detail-label">Departure Date and Time</div>
+        <div class="detail-value" id="disp-departure">28th Mar,2026 at 04:30 PM</div>
+      </div>
+    </div>
+
+    <!-- Return -->
+    <div class="detail-row">
+      <div class="detail-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.8">
+          <circle cx="5" cy="18" r="2"/><circle cx="5" cy="8" r="2"/>
+          <path d="M5 10v6M12 20l-3-4h6l-3 4zM12 4v12"/>
+        </svg>
+      </div>
+      <div class="detail-content">
+        <div class="detail-label">Return Date and Time</div>
+        <div class="detail-value" id="disp-return">28th Mar,2026 at 06:00 PM</div>
+      </div>
+    </div>
+
+    <!-- Room -->
+    <div class="detail-row">
+      <div class="detail-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.8">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+          <polyline points="9 22 9 12 15 12 15 22"/>
+        </svg>
+      </div>
+      <div class="detail-content">
+        <div class="detail-label">Room Details</div>
+        <div class="detail-value" id="disp-room">Boys Hostel | FIRST FLOOR | B-207</div>
+      </div>
+    </div>
+
+    <!-- Reason -->
+    <div class="detail-row">
+      <div class="detail-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.8">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <div class="detail-content">
+        <div class="detail-label">Reason</div>
+        <div class="detail-value" id="disp-reason">Purchase</div>
+      </div>
+    </div>
+
+    <!-- Remark -->
+    <div class="detail-row">
+      <div class="detail-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.8">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+      </div>
+      <div class="detail-content">
+        <div class="detail-label">Remark</div>
+        <div class="detail-value" id="disp-remark">Ok</div>
+      </div>
+    </div>
+
+  </div><!-- /info-section -->
+
+  <!-- Approval Section — click to edit -->
+  <div class="approval-section editable" onclick="openEditor('approvers')" title="Tap to edit approvers">
+    <div class="approval-title">Approval Status</div>
+    <div class="timeline" id="approvers-container">
+      <!-- rendered by JS -->
+    </div>
+  </div>
+
+</div><!-- /modal -->
+
+
+<!-- ═══════════════════════════════════════
+     EDITOR OVERLAY (bottom sheet)
+═══════════════════════════════════════ -->
+<div class="editor-overlay" id="editor-overlay">
+  <div class="editor-sheet" id="editor-sheet">
+    <!-- built dynamically by JS -->
+  </div>
+</div>
+
+
+<script src="script.js"></script>
+</body>
+</html>
