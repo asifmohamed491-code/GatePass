@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>vmedulife</title>
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#2d7a3a" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <link rel="icon" type="image/png" href="/icons/vm-icon.png" />
+  <link rel="shortcut icon" type="image/png" href="/icons/vm-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body class="app-body">
+
+  <nav class="app-nav">
+    <button class="nav-back" onclick="handleBack()">
+      <img src="./assets/back-arrow (2).png" alt="">
+    </button>
+    <span class="nav-title">Hostel</span>
+    <button class="nav-bell">
+      <img src="./assets/bell-new.png" alt="bell">
+    </button>
+  </nav>
+
+  <div class="app-scroll-wrap">
+
+    <div class="card">
+      <h2 class="card-title">Gate Pass Details</h2>
+
+      <div class="field-wrap">
+        <label>Name</label>
+        <input type="text" id="gp-name" readonly class="input-readonly" placeholder="Loading..." />
+      </div>
+
+      <div class="date-grid">
+        <div class="date-group">
+          <label>Departure Date and Time</label>
+          <div class="date-time-row">
+            <div class="custom-date-wrap flex1">
+              <select id="gp-departure-day" class="custom-date-select">
+                <option value="">DD</option>
+              </select>
+              <select id="gp-departure-month" class="custom-date-select">
+                <option value="">Month</option>
+                <option value="0">January</option>
+                <option value="1">February</option>
+                <option value="2">March</option>
+                <option value="3">April</option>
+                <option value="4">May</option>
+                <option value="5">June</option>
+                <option value="6">July</option>
+                <option value="7">August</option>
+                <option value="8">September</option>
+                <option value="9">October</option>
+                <option value="10">November</option>
+                <option value="11">December</option>
+              </select>
+              <select id="gp-departure-year" class="custom-date-select">
+                <option value="">YYYY</option>
+              </select>
+            </div>
+            <div class="input-icon-wrap flex1">
+              <span class="input-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <circle cx="8" cy="8" r="6" stroke="#555" stroke-width="1.4" />
+                  <line x1="8" y1="5" x2="8" y2="8.5" stroke="#555" stroke-width="1.4" stroke-linecap="round" />
+                  <line x1="8" y1="8.5" x2="10.5" y2="10" stroke="#555" stroke-width="1.4" stroke-linecap="round" />
+                </svg></span>
+              <input type="time" id="gp-departure-time" class="input-time" />
+            </div>
+          </div>
+          <input type="hidden" id="gp-departure" />
+          <span class="field-error" id="err-departure" style="display:none">Required</span>
+        </div>
+        <div class="date-group">
+          <label>Return Date and Time</label>
+          <div class="date-time-row">
+            <div class="custom-date-wrap flex1">
+              <select id="gp-return-day" class="custom-date-select">
+                <option value="">DD</option>
+              </select>
+              <select id="gp-return-month" class="custom-date-select">
+                <option value="">Month</option>
+                <option value="0">January</option>
+                <option value="1">February</option>
+                <option value="2">March</option>
+                <option value="3">April</option>
+                <option value="4">May</option>
+                <option value="5">June</option>
+                <option value="6">July</option>
+                <option value="7">August</option>
+                <option value="8">September</option>
+                <option value="9">October</option>
+                <option value="10">November</option>
+                <option value="11">December</option>
+              </select>
+              <select id="gp-return-year" class="custom-date-select">
+                <option value="">YYYY</option>
+              </select>
+            </div>
+            <div class="input-icon-wrap flex1">
+              <span class="input-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <circle cx="8" cy="8" r="6" stroke="#555" stroke-width="1.4" />
+                  <line x1="8" y1="5" x2="8" y2="8.5" stroke="#555" stroke-width="1.4" stroke-linecap="round" />
+                  <line x1="8" y1="8.5" x2="10.5" y2="10" stroke="#555" stroke-width="1.4" stroke-linecap="round" />
+                </svg></span>
+              <input type="time" id="gp-return-time" class="input-time" />
+            </div>
+          </div>
+          <input type="hidden" id="gp-return" />
+          <span class="field-error" id="err-return" style="display:none">Required</span>
+        </div>
+      </div>
+
+      <div class="three-col">
+        <div class="field-wrap">
+          <label>Hostel</label>
+          <div class="select-wrap">
+            <select id="gp-hostel">
+              <option value="">Select</option>
+              <option>Boys Hostel</option>
+              <option>Girls Hostel</option>
+            </select>
+            <svg class="select-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 5l4 4 4-4" stroke="#555" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <span class="field-error" id="err-hostel" style="display:none">Required</span>
+        </div>
+        <div class="field-wrap">
+          <label>Floor</label>
+          <div class="select-wrap">
+            <select id="gp-floor">
+              <option value="">Select</option>
+              <option>GROUND FLOOR</option>
+              <option>FIRST FLOOR</option>
+              <option>SECOND FLOOR</option>
+              <option>THIRD FLOOR</option>
+              <option>FOURTH FLOOR</option>
+            </select>
+            <svg class="select-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 5l4 4 4-4" stroke="#555" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <span class="field-error" id="err-floor" style="display:none">Required</span>
+        </div>
+        <div class="field-wrap">
+          <label>Room No</label>
+          <input type="text" id="gp-room" placeholder="e.g. B-207" />
+          <span class="field-error" id="err-room" style="display:none">Required</span>
+        </div>
+      </div>
+
+      <div class="field-wrap">
+        <label>Reason</label>
+        <div class="select-wrap">
+          <select id="gp-reason">
+            <option value="">Select reason</option>
+            <option>Purchase</option>
+            <option>Personal Work</option>
+            <option>Medical</option>
+            <option>Family Visit</option>
+            <option>Home Visit</option>
+            <option>Outing</option>
+            <option>Emergency</option>
+            <option>Other</option>
+          </select>
+          <svg class="select-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M3 5l4 4 4-4" stroke="#555" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </div>
+        <span class="field-error" id="err-reason" style="display:none">Required</span>
+      </div>
+
+      <div class="field-wrap">
+        <label>Remark</label>
+        <textarea id="gp-remark" rows="3" placeholder="Add remark..."></textarea>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">Approval Status</h2>
+      <div class="approval-table-header desktop-only">
+        <div class="ah-level">Level</div>
+        <div class="ah-name">Approver Name</div>
+        <div class="ah-emp">Employee Name (Editable)</div>
+        <div class="ah-status">Status</div>
+        <div class="ah-date">Approved On</div>
+        <div class="ah-remark">Remark</div>
+        <div class="ah-action">Action</div>
+      </div>
+      <div id="approvers-list"></div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">Recent Gate Passes</h2>
+      <div class="recent-table-header desktop-only">
+        <div>Name</div>
+        <div>Room No</div>
+        <div>Reason</div>
+        <div>Departure</div>
+        <div>Return</div>
+        <div>Status</div>
+        <div>Updated On</div>
+        <div></div>
+      </div>
+      <div id="recent-list">
+        <div class="loading-text">Loading...</div>
+      </div>
+    </div>
+
+    <div style="height:80px"></div>
+  </div>
+
+  <div class="bottom-bar">
+    <button class="btn-cancel" onclick="handleCancel()">Cancel</button>
+    <button class="btn-save" onclick="handleSave()">Save Changes</button>
+    <button class="btn-viewpass" onclick="handleViewPass()">View Gate Pass</button>
+  </div>
+
+  <!-- Gate Pass Modal Popup — NO onclick on overlay (close only via X button 4 times) -->
+  <div id="gatepass-modal" class="modal-overlay" style="display:none">
+    <div class="modal-container" id="modal-inner"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="/app.js"></script>
+  <script src="/dashboard.js"></script>
+</body>
+
+</html>

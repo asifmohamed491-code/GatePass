@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hostel Gate Pass - Login</title>
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#2d7a3a" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+
+<body class="auth-body">
+
+  <!-- Header Logo -->
+  <div class="auth-logo">
+    <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+      <path d="M17 2L4 10v14a4 4 0 004 4h18a4 4 0 004-4V10L17 2z" fill="#2d7a3a" stroke="#2d7a3a" stroke-width="1" />
+      <path d="M12 28V18h10v10" fill="#fff" />
+      <rect x="14" y="20" width="2" height="3" fill="#2d7a3a" />
+      <rect x="18" y="20" width="2" height="3" fill="#2d7a3a" />
+    </svg>
+    <span class="auth-logo-text">Hostel</span>
+  </div>
+
+  <div class="auth-card">
+    <!-- Icon -->
+    <div class="auth-icon-wrap">
+      <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
+        <rect x="8" y="12" width="28" height="20" rx="3" stroke="#2d7a3a" stroke-width="2.2" fill="none" />
+        <circle cx="17" cy="22" r="4" stroke="#2d7a3a" stroke-width="2" fill="none" />
+        <line x1="24" y1="19" x2="33" y2="19" stroke="#2d7a3a" stroke-width="2" stroke-linecap="round" />
+        <line x1="24" y1="24" x2="31" y2="24" stroke="#2d7a3a" stroke-width="2" stroke-linecap="round" />
+        <rect x="16" y="8" width="12" height="6" rx="2" fill="#2d7a3a" />
+        <rect x="20" y="8" width="4" height="3" rx="1" fill="#fff" />
+      </svg>
+    </div>
+
+    <h1 class="auth-title">Welcome Back</h1>
+    <p class="auth-subtitle">Login to your account to continue</p>
+
+    <div id="error-msg" class="error-msg" style="display:none"></div>
+
+    <div class="field-wrap">
+      <label>Register No</label>
+      <div class="input-icon-wrap">
+        <span class="input-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <rect x="2" y="3" width="14" height="12" rx="2" stroke="#9ca3af" stroke-width="1.5" />
+            <circle cx="7" cy="9" r="2" stroke="#9ca3af" stroke-width="1.5" />
+            <line x1="10" y1="7.5" x2="15" y2="7.5" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" />
+            <line x1="10" y1="10.5" x2="13" y2="10.5" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+        </span>
+        <input type="text" id="registerNo" placeholder="Enter your register number" autocomplete="off" />
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label>Username</label>
+      <div class="input-icon-wrap">
+        <span class="input-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <circle cx="9" cy="6.5" r="3" stroke="#9ca3af" stroke-width="1.5" />
+            <path d="M3 15c0-3 2.5-5 6-5s6 2 6 5" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+        </span>
+        <input type="text" id="username" placeholder="Enter your username" autocomplete="off" />
+      </div>
+    </div>
+
+    <div class="field-wrap">
+      <label>Password</label>
+      <div class="input-icon-wrap">
+        <span class="input-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <rect x="4" y="8" width="10" height="7" rx="2" stroke="#9ca3af" stroke-width="1.5" />
+            <path d="M6 8V6a3 3 0 016 0v2" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" />
+            <circle cx="9" cy="11.5" r="1" fill="#9ca3af" />
+          </svg>
+        </span>
+        <input type="password" id="password" placeholder="Enter your password" />
+        <button class="eye-btn" type="button" onclick="togglePwd('password',this)">
+          <svg class="eye-icon" width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M1 9s3-6 8-6 8 6 8 6-3 6-8 6-8-6-8-6z" stroke="#9ca3af" stroke-width="1.5" />
+            <circle cx="9" cy="9" r="2.5" stroke="#9ca3af" stroke-width="1.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="remember-row">
+      <label class="check-label">
+        <input type="checkbox" id="remember" />
+        <span class="checkmark"></span>
+        Remember me
+      </label>
+      <a href="#" class="forgot-link">Forgot password?</a>
+    </div>
+
+    <button class="btn-primary" onclick="handleLogin()">
+      <svg width="16" height="16" viewBox="0 0 18 18" fill="none">
+        <rect x="4" y="8" width="10" height="7" rx="2" stroke="#fff" stroke-width="1.8" />
+        <path d="M6 8V6a3 3 0 016 0v2" stroke="#fff" stroke-width="1.8" stroke-linecap="round" />
+      </svg>
+      Login
+    </button>
+
+    <div class="divider"><span>or</span></div>
+
+    <p class="auth-switch">Don't have an account? <a href="/signup.html">Signup</a></p>
+  </div>
+
+  <script src="/app.js"></script>
+  <script>
+    // Check saved credentials
+    window.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('remember_creds');
+      if (saved) {
+        const creds = JSON.parse(saved);
+        document.getElementById('registerNo').value = creds.registerNo || '';
+        document.getElementById('username').value = creds.username || '';
+        document.getElementById('remember').checked = true;
+      }
+      const token = localStorage.getItem('token');
+      if (token && !window.location.pathname.includes('index')) {
+        window.location.replace('/index.html');
+      }
+    });
+
+    async function handleLogin() {
+      const registerNo = document.getElementById('registerNo').value.trim();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+      const remember = document.getElementById('remember').checked;
+      const errDiv = document.getElementById('error-msg');
+      errDiv.style.display = 'none';
+
+      if ((!registerNo && !username) || !password) {
+        showError('Please enter Register No or Username and password'); return;
+      }
+
+      try {
+        const res = await fetch('/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ registerNo, username, password })
+        });
+        const data = await res.json();
+        if (!res.ok) { showError(data.message); return; }
+
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        if (remember) localStorage.setItem('remember_creds', JSON.stringify({ registerNo, username }));
+        else localStorage.removeItem('remember_creds');
+
+        window.location.href = '/index.html';
+      } catch (e) {
+        showError('Network error. Please try again.');
+      }
+    }
+
+    function showError(msg) {
+      const e = document.getElementById('error-msg');
+      e.textContent = msg;
+      e.style.display = 'block';
+    }
+  </script>
+</body>
+
+</html>
