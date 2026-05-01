@@ -1,4 +1,5 @@
 // Dashboard logic
+const BASE_URL = "https://gatepass-mtkd.onrender.com"
 
 let currentGatePassId = null;
 let currentUser = null;
@@ -47,9 +48,9 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   // ── FIX: Each fetch has its own .catch(null) — one failure won't affect others ──
   const [meRes, gpRes, recentRes] = await Promise.all([
-    fetch('/api/me',           { headers: apiHeaders() }).catch(() => null),
-    fetch('/api/gatepass',     { headers: apiHeaders() }).catch(() => null),
-    fetch('/api/gatepass/all', { headers: apiHeaders() }).catch(() => null)
+    fetch(`${BASE_URL}/api/me`,           { headers: apiHeaders() }).catch(() => null),
+    fetch(`${BASE_URL}/api/gatepass`,     { headers: apiHeaders() }).catch(() => null),
+    fetch(`${BASE_URL}/api/gatepass/all`, { headers: apiHeaders() }).catch(() => null)
   ]);
 
   // ── FIX: Only redirect on explicit 401/403 (bad token), NOT on network errors ──
@@ -110,10 +111,10 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
-// ── loadGatePass: used by handleCancel — no redirect, no crash ──
+// ── loadGatePass: used by handleCancel — no redirect, no crash ─
 async function loadGatePass() {
   try {
-    const res = await fetch('/api/gatepass', { headers: apiHeaders() });
+    const res = await fetch(`${BASE_URL}/api/gatepass`, { headers: apiHeaders() });
     if (!res || !res.ok) return;
     const gp = await res.json();
     if (!gp || !gp._id) return;
@@ -151,7 +152,7 @@ async function loadGatePass() {
 
 async function loadRecent() {
   try {
-    const res = await fetch('/api/gatepass/all', { headers: apiHeaders() });
+    const res = await fetch('${BASE_URL}/api/gatepass/all', { headers: apiHeaders() });
     if (!res || !res.ok) return;
     const passes = await res.json();
     renderRecent(passes);
@@ -433,11 +434,11 @@ async function handleSave() {
   try {
     let res;
     if (currentGatePassId) {
-      res = await fetch(`/api/gatepass/${currentGatePassId}`, {
+      res = await fetch(`${BASE_URL}/api/gatepass/${currentGatePassId}`, {
         method: 'PUT', headers: apiHeaders(), body: JSON.stringify(payload)
       });
     } else {
-      res = await fetch('/api/gatepass', {
+      res = await fetch('${BASE_URL}/api/gatepass', {
         method: 'POST', headers: apiHeaders(), body: JSON.stringify(payload)
       });
     }
