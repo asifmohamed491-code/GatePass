@@ -48,9 +48,9 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   // ── FIX: Each fetch has its own .catch(null) — one failure won't affect others ──
   const [meRes, gpRes, recentRes] = await Promise.all([
-    fetch(`${BASE_URL}/api/me`,           { headers: apiHeaders() }).catch(() => null),
-    fetch(`${BASE_URL}/api/gatepass`,     { headers: apiHeaders() }).catch(() => null),
-    fetch(`${BASE_URL}/api/gatepass/all`, { headers: apiHeaders() }).catch(() => null)
+    fetch(`/api/me`,           { headers: apiHeaders() }).catch(() => null),
+    fetch(`/api/gatepass`,     { headers: apiHeaders() }).catch(() => null),
+    fetch(`/api/gatepass/all`, { headers: apiHeaders() }).catch(() => null)
   ]);
 
   // ── FIX: Only redirect on explicit 401/403 (bad token), NOT on network errors ──
@@ -114,7 +114,7 @@ window.addEventListener('DOMContentLoaded', async () => {
 // ── loadGatePass: used by handleCancel — no redirect, no crash ─
 async function loadGatePass() {
   try {
-    const res = await fetch(`${BASE_URL}/api/gatepass`, { headers: apiHeaders() });
+    const res = await fetch(`/api/gatepass`, { headers: apiHeaders() });
     if (!res || !res.ok) return;
     const gp = await res.json();
     if (!gp || !gp._id) return;
@@ -152,7 +152,7 @@ async function loadGatePass() {
 
 async function loadRecent() {
   try {
-    const res = await fetch('${BASE_URL}/api/gatepass/all', { headers: apiHeaders() });
+    const res = await fetch('/api/gatepass/all', { headers: apiHeaders() });
     if (!res || !res.ok) return;
     const passes = await res.json();
     renderRecent(passes);
@@ -254,9 +254,7 @@ function renderApprovers() {
     return `
       <div class="approval-row desktop-only">
         <div class="ar-level">
-          <div class="timeline-check">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="7" fill="#2d7a3a"/><path d="M4 7l2 2 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
+          
           <div class="level-text">
             <span class="level-label">${ap.level.split(' ').slice(0,2).join(' ')}<br/>${ap.level.split(' ').slice(2).join(' ')}</span>
           </div>
@@ -268,11 +266,9 @@ function renderApprovers() {
         <div class="ar-status"><span class="badge-approved">Approved</span></div>
         <div class="ar-date">
           <div class="input-icon-wrap" style="margin-bottom:6px">
-            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="2" width="13" height="11" rx="1.5" stroke="#555" stroke-width="1.3"/><line x1="1" y1="5.5" x2="14" y2="5.5" stroke="#555" stroke-width="1.3"/><line x1="4.5" y1="1" x2="4.5" y2="3.5" stroke="#555" stroke-width="1.3" stroke-linecap="round"/><line x1="10.5" y1="1" x2="10.5" y2="3.5" stroke="#555" stroke-width="1.3" stroke-linecap="round"/></svg></span>
             <input type="date" id="ap-date-${i}" value="${dateISO}" class="input-time" style="padding-left:28px;font-size:13px;width:100%;box-sizing:border-box;" onchange="approversState[${i}].date=this.value"/>
           </div>
           <div class="input-icon-wrap">
-            <span class="input-icon"><svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6" stroke="#555" stroke-width="1.3"/><line x1="7.5" y1="4.5" x2="7.5" y2="8" stroke="#555" stroke-width="1.3" stroke-linecap="round"/><line x1="7.5" y1="8" x2="10" y2="9.5" stroke="#555" stroke-width="1.3" stroke-linecap="round"/></svg></span>
             <input type="time" id="ap-time-${i}" value="${timeVal}" class="input-time" style="padding-left:28px;font-size:13px;width:100%;box-sizing:border-box;" onchange="approversState[${i}].time=this.value"/>
           </div>
         </div>
@@ -434,11 +430,11 @@ async function handleSave() {
   try {
     let res;
     if (currentGatePassId) {
-      res = await fetch(`${BASE_URL}/api/gatepass/${currentGatePassId}`, {
+      res = await fetch(`/api/gatepass/${currentGatePassId}`, {
         method: 'PUT', headers: apiHeaders(), body: JSON.stringify(payload)
       });
     } else {
-      res = await fetch('${BASE_URL}/api/gatepass', {
+      res = await fetch('/api/gatepass', {
         method: 'POST', headers: apiHeaders(), body: JSON.stringify(payload)
       });
     }

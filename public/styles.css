@@ -93,11 +93,15 @@ body { font-family: var(--font); color: var(--text); background: var(--gray-bg);
   color: #374151;
   margin-bottom: 6px;
 }
+.field-wrap input{
+  padding: 10px 10px;
+}
 
 .input-icon-wrap {
   position: relative;
   display: flex;
   align-items: center;
+  
 }
 
 .input-icon {
@@ -109,7 +113,7 @@ body { font-family: var(--font); color: var(--text); background: var(--gray-bg);
   z-index: 1;
 }
 
-.input-icon-wrap input,
+
 .input-icon-wrap select {
   width: 100%;
   padding: 11px 14px 11px 38px;
@@ -129,6 +133,29 @@ body { font-family: var(--font); color: var(--text); background: var(--gray-bg);
 .input-icon-wrap input:focus,
 .input-icon-wrap select:focus {
   border-color: var(--green);
+}
+
+.input-icon-wrap input[type="time"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  right: 10px;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+
+.input-icon-wrap input[type="time"] {
+  height: 48px;
+  text-align: center;       /* horizontal center */
+  padding: 0; 
+}
+
+.input-icon-wrap input[type="time"]::-webkit-datetime-edit {
+  display: flex;
+  align-items: center;      /* vertical center */
+  justify-content: center;  /* horizontal center */
+  height: 100%;
 }
 
 input, select, textarea {
@@ -723,7 +750,7 @@ textarea {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.7);
   z-index: 200;
   display: flex;
   align-items: flex-end;
@@ -733,7 +760,7 @@ textarea {
 
 .modal-container {
   width: 100%;
-  max-width: 420px;
+  max-width: 355px;
   max-height: 91.5vh;
   overflow-y: auto;
   margin: 20px auto 0;
