@@ -733,7 +733,7 @@ textarea {
 
 .modal-container {
   width: 100%;
-  max-width: 460px;
+  max-width: 420px;
   max-height: 91.5vh;
   overflow-y: auto;
   margin: 20px auto 0;
