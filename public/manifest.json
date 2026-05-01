@@ -5,7 +5,11 @@
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#f0f2f5",
+<<<<<<< HEAD
   "theme_color": "#ffffff",
+=======
+  "theme_color": " #ffffff",
+>>>>>>> aa3da24 (render working)
   "orientation": "portrait",
   "icons": [
     {
