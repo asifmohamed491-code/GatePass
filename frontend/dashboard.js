@@ -8,9 +8,9 @@ let currentUser = null;
 let _closeClickCount = 0;
 
 const DEFAULT_APPROVERS = [
-  { level: 'First Level Approver',  name: 'PRIYANKA A',  role: 'Employee', status: 'Approved', date: '', time: '', remark: '' },
+  { level: 'First Level Approver', name: 'PRIYANKA A', role: 'Employee', status: 'Approved', date: '', time: '', remark: '' },
   { level: 'Second Level Approver', name: 'NATARAJAN V', role: 'Employee', status: 'Approved', date: '', time: '', remark: '' },
-  { level: 'Third Level Approver',  name: 'RAJESHWAR R', role: 'Employee', status: 'Approved', date: '', time: '', remark: '' }
+  { level: 'Third Level Approver', name: 'RAJESHWAR R', role: 'Employee', status: 'Approved', date: '', time: '', remark: '' }
 ];
 
 let approversState = JSON.parse(JSON.stringify(DEFAULT_APPROVERS));
@@ -18,7 +18,7 @@ let approversState = JSON.parse(JSON.stringify(DEFAULT_APPROVERS));
 function randomApprovalTime() {
   const h = Math.floor(Math.random() * 12) + 6; // 6–17
   const m = Math.floor(Math.random() * 60);
-  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
 }
 
 window.addEventListener('DOMContentLoaded', async () => {
@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   initCustomDateDefaults();
 
   // Block ESC from closing modal
-  document.addEventListener('keydown', function(e) {
+  document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); }
   }, true);
 
@@ -48,8 +48,8 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   // ── FIX: Each fetch has its own .catch(null) — one failure won't affect others ──
   const [meRes, gpRes, recentRes] = await Promise.all([
-    fetch(`/api/me`,           { headers: apiHeaders() }).catch(() => null),
-    fetch(`/api/gatepass`,     { headers: apiHeaders() }).catch(() => null),
+    fetch(`/api/me`, { headers: apiHeaders() }).catch(() => null),
+    fetch(`/api/gatepass`, { headers: apiHeaders() }).catch(() => null),
     fetch(`/api/gatepass/all`, { headers: apiHeaders() }).catch(() => null)
   ]);
 
@@ -64,7 +64,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     try {
       currentUser = await meRes.json();
       document.getElementById('gp-name').value = currentUser.fullName.toUpperCase();
-    } catch(e) { console.warn('user parse error', e); }
+    } catch (e) { console.warn('user parse error', e); }
   }
 
   // Gate pass form — guarded parse, won't crash on bad response
@@ -80,15 +80,15 @@ window.addEventListener('DOMContentLoaded', async () => {
         const retISO = toDateInput(gp.returnDate || '');
         if (depISO) setCustomDateFromISO('gp-departure', depISO);
         if (retISO) setCustomDateFromISO('gp-return', retISO);
-        document.getElementById('gp-departure').value      = depISO;
-        document.getElementById('gp-return').value         = retISO;
+        document.getElementById('gp-departure').value = depISO;
+        document.getElementById('gp-return').value = retISO;
         document.getElementById('gp-departure-time').value = toTimeInput(gp.departureTime || '');
-        document.getElementById('gp-return-time').value    = toTimeInput(gp.returnTime || '');
-        document.getElementById('gp-hostel').value         = gp.hostel || '';
-        document.getElementById('gp-floor').value          = gp.floor || '';
-        document.getElementById('gp-room').value           = gp.roomNo || '';
-        document.getElementById('gp-reason').value         = gp.reason || '';
-        document.getElementById('gp-remark').value         = gp.remark || '';
+        document.getElementById('gp-return-time').value = toTimeInput(gp.returnTime || '');
+        document.getElementById('gp-hostel').value = gp.hostel || '';
+        document.getElementById('gp-floor').value = gp.floor || '';
+        document.getElementById('gp-room').value = gp.roomNo || '';
+        document.getElementById('gp-reason').value = gp.reason || '';
+        document.getElementById('gp-remark').value = gp.remark || '';
 
         if (gp.approvers && gp.approvers.length > 0) {
           approversState = gp.approvers;
@@ -99,7 +99,7 @@ window.addEventListener('DOMContentLoaded', async () => {
           renderApprovers();
         }
       }
-    } catch(e) { console.warn('gatepass parse error', e); }
+    } catch (e) { console.warn('gatepass parse error', e); }
   }
 
   // Recent passes — silent fail, just leave "Loading..." if broken
@@ -107,7 +107,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     try {
       const passes = await recentRes.json();
       renderRecent(passes);
-    } catch(e) { console.warn('recent parse error', e); }
+    } catch (e) { console.warn('recent parse error', e); }
   }
 });
 
@@ -126,15 +126,15 @@ async function loadGatePass() {
     const retISO = toDateInput(gp.returnDate || '');
     if (depISO) setCustomDateFromISO('gp-departure', depISO);
     if (retISO) setCustomDateFromISO('gp-return', retISO);
-    document.getElementById('gp-departure').value      = depISO;
-    document.getElementById('gp-return').value         = retISO;
+    document.getElementById('gp-departure').value = depISO;
+    document.getElementById('gp-return').value = retISO;
     document.getElementById('gp-departure-time').value = toTimeInput(gp.departureTime || '');
-    document.getElementById('gp-return-time').value    = toTimeInput(gp.returnTime || '');
-    document.getElementById('gp-hostel').value         = gp.hostel || '';
-    document.getElementById('gp-floor').value          = gp.floor || '';
-    document.getElementById('gp-room').value           = gp.roomNo || '';
-    document.getElementById('gp-reason').value         = gp.reason || '';
-    document.getElementById('gp-remark').value         = gp.remark || '';
+    document.getElementById('gp-return-time').value = toTimeInput(gp.returnTime || '');
+    document.getElementById('gp-hostel').value = gp.hostel || '';
+    document.getElementById('gp-floor').value = gp.floor || '';
+    document.getElementById('gp-room').value = gp.roomNo || '';
+    document.getElementById('gp-reason').value = gp.reason || '';
+    document.getElementById('gp-remark').value = gp.remark || '';
 
     if (gp.approvers && gp.approvers.length > 0) {
       approversState = gp.approvers;
@@ -145,7 +145,7 @@ async function loadGatePass() {
     }
     // ── FIX: renderApprovers was missing from handleCancel flow ──
     renderApprovers();
-  } catch(e) {
+  } catch (e) {
     console.warn('loadGatePass error', e);
   }
 }
@@ -156,7 +156,7 @@ async function loadRecent() {
     if (!res || !res.ok) return;
     const passes = await res.json();
     renderRecent(passes);
-  } catch(e) {
+  } catch (e) {
     console.warn('loadRecent error', e);
   }
 }
@@ -169,13 +169,13 @@ function renderRecent(passes) {
   }
 
   const desktopHTML = passes.map(gp => {
-    const depDate    = gp.departure     ? formatDate(gp.departure)      : '';
-    const depTime    = gp.departureTime ? formatTime(gp.departureTime)  : '';
-    const retDate    = gp.returnDate    ? formatDate(gp.returnDate)     : '';
-    const retTime    = gp.returnTime    ? formatTime(gp.returnTime)     : '';
+    const depDate = gp.departure ? formatDate(gp.departure) : '';
+    const depTime = gp.departureTime ? formatTime(gp.departureTime) : '';
+    const retDate = gp.returnDate ? formatDate(gp.returnDate) : '';
+    const retTime = gp.returnTime ? formatTime(gp.returnTime) : '';
     const updatedDate = formatDate(gp.updatedAt);
     const updatedTime = gp.updatedAt
-      ? formatTime(new Date(gp.updatedAt).toTimeString().slice(0,5))
+      ? formatTime(new Date(gp.updatedAt).toTimeString().slice(0, 5))
       : '';
     const name = gp.name || (gp.userId && gp.userId.fullName) || '';
 
@@ -256,7 +256,7 @@ function renderApprovers() {
         <div class="ar-level">
           
           <div class="level-text">
-            <span class="level-label">${ap.level.split(' ').slice(0,2).join(' ')}<br/>${ap.level.split(' ').slice(2).join(' ')}</span>
+            <span class="level-label">${ap.level.split(' ').slice(0, 2).join(' ')}<br/>${ap.level.split(' ').slice(2).join(' ')}</span>
           </div>
         </div>
         <div class="ar-approver-name">${ap.name}</div>
@@ -265,12 +265,43 @@ function renderApprovers() {
         </div>
         <div class="ar-status"><span class="badge-approved">Approved</span></div>
         <div class="ar-date">
-          <div class="input-icon-wrap" style="margin-bottom:6px">
-            <input type="date" id="ap-date-${i}" value="${dateISO}" class="input-time" style="padding-left:28px;font-size:13px;width:100%;box-sizing:border-box;" onchange="approversState[${i}].date=this.value"/>
-          </div>
-          <div class="input-icon-wrap">
-            <input type="time" id="ap-time-${i}" value="${timeVal}" class="input-time" style="padding-left:28px;font-size:13px;width:100%;box-sizing:border-box;" onchange="approversState[${i}].time=this.value"/>
-          </div>
+          <div class="input-icon-wrap" style="margin-bottom:6px; position:relative;">
+  <input 
+    type="date" 
+    id="ap-date-${i}" 
+    value="${dateISO}" 
+    class="input-time" 
+    style="
+      font-size:13px;
+      width:100%;
+      box-sizing:border-box;
+      appearance:none;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+    " 
+    onchange="approversState[${i}].date=this.value"
+  />
+
+
+<div class="input-icon-wrap" style="position:relative;">
+  <input 
+    type="time" 
+    id="ap-time-${i}" 
+    value="${timeVal}" 
+    class="input-time" 
+    style="
+  
+    text-align:left; padding-left:10px;
+      font-size:13px;
+      width:100%;
+      box-sizing:border-box;
+      appearance:none;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+    " 
+    onchange="approversState[${i}].time=this.value"
+  />
+</div>
         </div>
         <div class="ar-remark">
           <input type="text" class="remark-input" id="ap-remark-${i}" value="${ap.remark || ''}" placeholder="Remark" onchange="approversState[${i}].remark=this.value"/>
@@ -372,11 +403,11 @@ function validateFields() {
   }
 
   checkSelect('gp-hostel', 'err-hostel');
-  checkSelect('gp-floor',  'err-floor');
+  checkSelect('gp-floor', 'err-floor');
   checkSelect('gp-reason', 'err-reason');
 
-  const roomEl   = document.getElementById('gp-room');
-  const roomErr  = document.getElementById('err-room');
+  const roomEl = document.getElementById('gp-room');
+  const roomErr = document.getElementById('err-room');
   if (!roomEl || !roomEl.value.trim()) {
     if (roomErr) roomErr.style.display = 'block';
     valid = false;
@@ -393,30 +424,30 @@ async function handleSave() {
     return;
   }
 
-  const name          = document.getElementById('gp-name').value;
-  const departure     = getCustomDateISO('gp-departure');
+  const name = document.getElementById('gp-name').value;
+  const departure = getCustomDateISO('gp-departure');
   const departureTime = document.getElementById('gp-departure-time').value;
-  const returnDate    = getCustomDateISO('gp-return');
-  const returnTime    = document.getElementById('gp-return-time').value;
-  const hostel        = document.getElementById('gp-hostel').value;
-  const floor         = document.getElementById('gp-floor').value;
-  const roomNo        = document.getElementById('gp-room').value;
-  const reason        = document.getElementById('gp-reason').value;
-  const remark        = document.getElementById('gp-remark').value;
+  const returnDate = getCustomDateISO('gp-return');
+  const returnTime = document.getElementById('gp-return-time').value;
+  const hostel = document.getElementById('gp-hostel').value;
+  const floor = document.getElementById('gp-floor').value;
+  const roomNo = document.getElementById('gp-room').value;
+  const reason = document.getElementById('gp-reason').value;
+  const remark = document.getElementById('gp-remark').value;
 
   approversState.forEach((ap, i) => {
-    const empD    = document.getElementById(`emp-${i}`);
-    const empM    = document.getElementById(`emp-mob-${i}`);
-    const dateD   = document.getElementById(`ap-date-${i}`);
-    const timeD   = document.getElementById(`ap-time-${i}`);
+    const empD = document.getElementById(`emp-${i}`);
+    const empM = document.getElementById(`emp-mob-${i}`);
+    const dateD = document.getElementById(`ap-date-${i}`);
+    const timeD = document.getElementById(`ap-time-${i}`);
     const remarkD = document.getElementById(`ap-remark-${i}`);
-    if (empD)    ap.name   = empD.value;
-    if (empM)    ap.name   = empM.value;
+    if (empD) ap.name = empD.value;
+    if (empM) ap.name = empM.value;
     const dateMob = document.getElementById(`ap-mob-date-${i}`);
     const timeMob = document.getElementById(`ap-mob-time-${i}`);
-    if (dateD && dateD.value)          ap.date = dateD.value;
+    if (dateD && dateD.value) ap.date = dateD.value;
     else if (dateMob && dateMob.value) ap.date = dateMob.value;
-    if (timeD && timeD.value)          ap.time = timeD.value;
+    if (timeD && timeD.value) ap.time = timeD.value;
     else if (timeMob && timeMob.value) ap.time = timeMob.value;
     if (remarkD) ap.remark = remarkD.value;
   });
@@ -443,7 +474,7 @@ async function handleSave() {
     currentGatePassId = data._id;
     await loadRecent();
     showToast('Gate pass saved successfully!');
-  } catch(e) {
+  } catch (e) {
     alert('Network error. Please try again.');
   }
 }
@@ -475,23 +506,23 @@ function showToast(msg) {
 // ───────────────────────────────────────────────────
 
 function handleViewPass() {
-  const name    = document.getElementById('gp-name').value || 'N/A';
-  const depISO  = getCustomDateISO('gp-departure');
+  const name = document.getElementById('gp-name').value || 'N/A';
+  const depISO = getCustomDateISO('gp-departure');
   const depTime = document.getElementById('gp-departure-time').value;
-  const retISO  = getCustomDateISO('gp-return');
+  const retISO = getCustomDateISO('gp-return');
   const retTime = document.getElementById('gp-return-time').value;
-  const hostel  = document.getElementById('gp-hostel').value || '';
-  const floor   = document.getElementById('gp-floor').value || '';
-  const room    = document.getElementById('gp-room').value || '';
-  const reason  = document.getElementById('gp-reason').value || '';
-  const remark  = document.getElementById('gp-remark').value || '';
+  const hostel = document.getElementById('gp-hostel').value || '';
+  const floor = document.getElementById('gp-floor').value || '';
+  const room = document.getElementById('gp-room').value || '';
+  const reason = document.getElementById('gp-reason').value || '';
+  const remark = document.getElementById('gp-remark').value || '';
 
-  const depFmt      = depISO ? formatOrdinalDateTime(depISO, depTime) : '';
-  const retFmt      = retISO ? formatOrdinalDateTime(retISO, retTime) : '';
+  const depFmt = depISO ? formatOrdinalDateTime(depISO, depTime) : '';
+  const retFmt = retISO ? formatOrdinalDateTime(retISO, retTime) : '';
   const roomDetails = `${hostel} | ${floor} | ${room}`;
 
   const now = new Date();
-  const requestedOn = `Requested on : ${formatOrdinalDateTimeCompact(now.toISOString().split('T')[0], now.toTimeString().slice(0,5))}`;
+  const requestedOn = `Requested on : ${formatOrdinalDateTimeCompact(now.toISOString().split('T')[0], now.toTimeString().slice(0, 5))}`;
 
   const approversHTML = approversState.map((ap) => {
     const dateISO = ap.date || new Date().toISOString().split('T')[0];
@@ -584,7 +615,7 @@ function handleViewPass() {
     }
   }, 100);
 
-  modal.addEventListener('click',    blockOutsideClick, true);
+  modal.addEventListener('click', blockOutsideClick, true);
   modal.addEventListener('touchend', blockOutsideClick, true);
 }
 
@@ -608,6 +639,6 @@ function closeGatePassModal() {
   modal.style.display = 'none';
   document.body.style.overflow = '';
   _closeClickCount = 0;
-  modal.removeEventListener('click',    blockOutsideClick, true);
+  modal.removeEventListener('click', blockOutsideClick, true);
   modal.removeEventListener('touchend', blockOutsideClick, true);
 }

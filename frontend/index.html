@@ -20,6 +20,7 @@
 
 <body class="app-body">
 
+  <!-- ── NAVBAR (unchanged) ── -->
   <nav class="app-nav">
     <button class="nav-back" onclick="handleBack()">
       <img src="./assets/back-arrow (2).png" alt="">
@@ -32,6 +33,7 @@
 
   <div class="app-scroll-wrap">
 
+    <!-- ── GATE PASS DETAILS CARD ── -->
     <div class="card">
       <h2 class="card-title">Gate Pass Details</h2>
 
@@ -67,7 +69,7 @@
                 <option value="">YYYY</option>
               </select>
             </div>
-            <div class="input-icon-wrap flex1">
+            <div class="time-field-wrap flex1">
               <input type="time" id="gp-departure-time" class="input-time" />
             </div>
           </div>
@@ -100,7 +102,7 @@
                 <option value="">YYYY</option>
               </select>
             </div>
-            <div class="input-icon-wrap flex1">
+            <div class="time-field-wrap flex1">
               <input type="time" id="gp-return-time" class="input-time" />
             </div>
           </div>
@@ -175,6 +177,7 @@
       </div>
     </div>
 
+    <!-- ── APPROVAL STATUS CARD ── -->
     <div class="card">
       <h2 class="card-title">Approval Status</h2>
       <div class="approval-table-header desktop-only">
@@ -189,6 +192,7 @@
       <div id="approvers-list"></div>
     </div>
 
+    <!-- ── RECENT GATE PASSES CARD ── -->
     <div class="card">
       <h2 class="card-title">Recent Gate Passes</h2>
       <div class="recent-table-header desktop-only">
@@ -209,9 +213,13 @@
     <div style="height:80px"></div>
   </div>
 
+  <!-- ── BOTTOM BAR (unchanged) ── -->
   <div class="bottom-bar">
     <button class="btn-cancel" onclick="handleCancel()">Cancel</button>
-    <button class="btn-save" onclick="handleSave()">Save Changes</button>
+    <button class="btn-save" id="save-btn" onclick="handleSaveWithLoading()">
+      <span class="btn-spinner-save" id="save-spinner" style="display:none"></span>
+      <span id="save-label">Save Changes</span>
+    </button>
     <button class="btn-viewpass" onclick="handleViewPass()">View Gate Pass</button>
   </div>
 
@@ -223,6 +231,70 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="/app.js"></script>
   <script src="/dashboard.js"></script>
+  <style>
+    .btn-spinner-save {
+      display: inline-block;
+      width: 15px; height: 15px;
+      border: 2px solid rgba(255,255,255,0.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: btn-spin-save 0.65s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+      flex-shrink: 0;
+    }
+    @keyframes btn-spin-save { to { transform: rotate(360deg); } }
+    .btn-save:disabled { opacity: 0.82; cursor: not-allowed; transform: none !important; }
+  </style>
+  <script>
+    async function handleSaveWithLoading() {
+      const btn = document.getElementById('save-btn');
+      const spinner = document.getElementById('save-spinner');
+      const label = document.getElementById('save-label');
+
+      btn.disabled = true;
+      spinner.style.display = 'inline-block';
+      label.textContent = 'Saving...';
+
+      const resetBtn = () => {
+        btn.disabled = false;
+        spinner.style.display = 'none';
+        label.textContent = 'Save Changes';
+      };
+
+      try {
+        // Patch fetch temporarily to detect when handleSave's API call completes
+        const origFetch = window.fetch;
+        let fetchDone = false;
+        window.fetch = async (...args) => {
+          try {
+            const res = await origFetch(...args);
+            fetchDone = true;
+            window.fetch = origFetch;
+            setTimeout(resetBtn, 300);
+            return res;
+          } catch(e) {
+            fetchDone = true;
+            window.fetch = origFetch;
+            setTimeout(resetBtn, 300);
+            throw e;
+          }
+        };
+
+        handleSave();
+
+        // Fallback: reset after 8s if fetch never fired (e.g. validation failure)
+        setTimeout(() => {
+          if (!fetchDone) {
+            window.fetch = origFetch;
+            resetBtn();
+          }
+        }, 8000);
+      } catch(e) {
+        resetBtn();
+      }
+    }
+  </script>
 </body>
 
 </html>
