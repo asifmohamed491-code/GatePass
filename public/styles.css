@@ -1335,7 +1335,7 @@ textarea {
   content: '';
   position: absolute;
   left: -13px;
-  top: 8px;
+  top: 5px;
   width: 12px;
   height: 12px;
   border-radius: 50%;
