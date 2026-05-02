@@ -25,5 +25,3 @@ const gatePassSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 module.exports = mongoose.model('GatePass', gatePassSchema);
-// server.js
-// just add space or comment
